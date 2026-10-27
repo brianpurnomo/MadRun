@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MadRun</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="root">
+<main id="app">
+  <div id="stage"><canvas id="game"></canvas></div>
+  <div id="pad"> <!-- kontrol layar sentuh (HP): kiri-kanan di kiri bawah, lompat di kanan bawah -->
+    <div class="grup"><button id="kiri" aria-label="Kiri"><img class="ikon" id="ikonKiri" alt="Kiri"></button><button id="kanan" aria-label="Kanan"><img class="ikon" id="ikonKanan" alt="Kanan"></button></div>
+    <button id="jump" aria-label="Lompat"><img class="ikon" id="ikonA" alt="Lompat"></button>
+  </div>
+</main>
+
+<!-- Layar-layar (overlay): hanya satu yang tampil pada satu waktu -->
+<section id="menu" class="overlay"><div class="card">
+  <canvas id="hero" width="160" height="160"></canvas>
+  <h1 class="judul nama-game">MadRun</h1>
+  <p>Berlari, melompat, dan asah kemampuan matematikamu!</p>
+  <button id="btnStart" class="btn">Mulai Bermain</button>
+  <button id="btnHow" class="btn alt">Cara Bermain</button>
+</div></section>
+
+<section id="how" class="overlay hidden"><div class="card">
+  <h2>Cara Bermain</h2>
+  <ul class="how">
+    <li><b>Komputer:</b> tekan <b>A / D</b> atau <b>panah kiri / kanan</b> untuk berjalan, <b>Spasi</b> untuk melompat (tahan lebih lama = lebih tinggi). Karakter tidak berjalan sendiri.</li>
+    <li><b>Ponsel:</b> <img id="ikonKetuk" class="ikon hp" alt=""> tekan tombol <b>&#9664; &#9654;</b> untuk berjalan dan <b>LOMPAT</b> untuk melompat.</li>
+    <li>Lompati lubang. Jatuh ke lubang membuat <b>1 nyawa</b> hilang. Kamu punya 3 nyawa (hati).</li>
+    <li>Setelah skor tertentu, dekati rintangan agar Jin muncul dengan soal matematika. Pilih jawaban dengan klik atau tombol <b>1 / 2 / 3</b>, lanjut dengan <b>Enter</b>. Jawaban benar memberi bonus skor, jawaban salah mengurangi 1 nyawa.</li>
+    <li>Nyawa habis berarti Game Over. Kejar skor tertinggi!</li>
+  </ul>
+  <button id="btnBack" class="btn">Kembali</button>
+</div></section>
+
+<section id="challenge" class="overlay hidden"><div class="card">
+  <div class="row">
+    <!-- Jin: gambar SVG buatan sendiri -->
+    <svg class="genie" viewBox="0 0 80 100">
+      <path d="M20 58Q22 86 42 92Q30 97 42 99Q66 92 60 58Z" fill="#29b6f6"/>
+      <rect x="22" y="40" width="36" height="26" rx="12" fill="#29b6f6"/>
+      <circle cx="40" cy="28" r="14" fill="#4fc3f7"/>
+      <path d="M26 24Q40 2 54 24Z" fill="#ffca28"/><circle cx="40" cy="13" r="3" fill="#e53935"/>
+      <circle cx="35" cy="30" r="2" fill="#223"/><circle cx="45" cy="30" r="2" fill="#223"/>
+      <path d="M35 36Q40 40 45 36" stroke="#223" stroke-width="2" fill="none"/>
+    </svg>
+    <div id="say" class="bubble"></div>
+  </div>
+  <div id="cvis"></div>
+  <div id="copts"></div>
+  <button id="cnext" class="btn">Lanjut</button>
+</div></section>
+
+<section id="over" class="overlay hidden"><div class="card over">
+  <h2>Game Over</h2>
+  <p>Skor: <b id="finalScore">0</b> &nbsp;|&nbsp; Terbaik: <b id="bestScore">0</b></p>
+  <button id="btnAgain" class="btn">Main Lagi</button>
+  <button id="btnMenu" class="btn alt">Kembali ke Menu</button>
+</div></section>
+
+</div>
+<script src="game.js"></script>
+</body>
+</html>

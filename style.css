@@ -1,0 +1,99 @@
+/* MadRun - style.css */
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit;margin:0}
+html,body{height:100%}
+body{background:#b8e4e8;font-family:"Trebuchet MS",system-ui,sans-serif;color:#fff;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+
+#app{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:8px}
+/* Kanvas selalu 16:9 dan menyesuaikan lebar/tinggi layar */
+#stage{width:min(100%,calc((100vh - 110px)*1.7778));aspect-ratio:16/9;border-radius:14px;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.5);border:4px solid #1d2557}
+#game{width:100%;height:100%;display:block;touch-action:none}
+
+/* Kontrol layar sentuh (HP): kiri-kanan di kiri bawah, lompat di kanan bawah, berjauhan */
+#root{height:100%}
+#pad{display:none;position:absolute;left:0;right:0;bottom:calc(8px + env(safe-area-inset-bottom,0px));justify-content:space-between;align-items:flex-end;padding:0 24px;pointer-events:none;z-index:4}
+#pad .grup{display:flex;gap:18px}
+#pad button{pointer-events:auto;background:none;border:0;padding:0;touch-action:none;-webkit-tap-highlight-color:transparent}
+.ikon{width:32px;height:32px;image-rendering:pixelated}
+#pad .ikon{width:68px;height:68px;opacity:.9;display:block}
+#pad #jump .ikon{width:84px;height:84px}
+#pad button:active .ikon{transform:scale(.9);filter:brightness(.75)}
+.hp{display:none}
+.touch #pad{display:flex}.touch .hp{display:inline-block;vertical-align:middle}
+
+/* Overlay (menu, tantangan, game over) */
+.overlay{position:fixed;inset:0;display:flex;background:rgba(10,18,50,.62);padding:12px;z-index:5;overflow:auto}
+.hidden{display:none!important}
+.card{margin:auto;width:100%;max-width:520px;background:#fff;color:#1d2557;border-radius:22px;padding:20px 22px;text-align:center;box-shadow:0 14px 44px rgba(0,0,0,.45);animation:pop .3s}
+.judul{font-size:2.6rem;color:#ff7a2f;text-shadow:3px 3px 0 #1d2557;letter-spacing:1px}
+.card p{margin:6px 0 10px;line-height:1.4}
+.card h2{margin-bottom:8px}
+#hero{display:block;margin:0 auto}
+.how{text-align:left;padding-left:20px;line-height:1.45}
+.how li{margin-bottom:8px}
+.over h2{font-size:2.2rem;color:#e63946}
+
+.btn{display:block;width:100%;margin:8px 0 0;padding:12px;font:inherit;font-weight:800;font-size:1.05rem;border:0;border-radius:14px;background:#ff7a2f;color:#fff;cursor:pointer;box-shadow:0 4px 0 #c4561a}
+.btn.alt{background:#3b5bdb;box-shadow:0 4px 0 #2640a8}
+.btn:active{transform:translateY(3px);box-shadow:none}
+
+/* Jin dan soal */
+.row{display:flex;gap:10px;align-items:flex-end}
+.genie{width:72px;flex:none;animation:float 2s ease-in-out infinite}
+.bubble{background:#eef3ff;border-radius:16px;padding:10px 12px;text-align:left;font-size:1.02rem;line-height:1.4}
+#cvis{margin:10px 0;display:flex;justify-content:center;align-items:flex-end;flex-wrap:wrap;gap:6px;min-height:40px}
+#copts{display:grid;gap:8px}
+.opt{padding:12px;font:inherit;font-weight:800;font-size:1.1rem;border:2px solid #3b5bdb;background:#fff;color:#1d2557;border-radius:12px;cursor:pointer}
+.opt:hover:not(:disabled){background:#eef3ff}
+.opt.benar{background:#2ecc71;border-color:#27ae60;color:#fff}
+.opt.salah{background:#ff5a5f;border-color:#d63a3f;color:#fff}
+
+/* Makhluk dan peluru dibuat dengan CSS murni */
+.pair{display:flex;flex-direction:column;align-items:center;gap:4px;margin:0 8px;animation:pop .4s both}
+.mon{width:calc(24px*var(--k,1)*var(--s,1));height:calc(24px*var(--k,1)*var(--s,1));image-rendering:pixelated}
+.bullet{width:8px;height:14px;border-radius:4px 4px 2px 2px;background:#ffb300}
+.grid{display:flex;flex-wrap:wrap;gap:4px;justify-content:center}
+
+@keyframes pop{from{transform:scale(.3);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes float{50%{transform:translateY(-6px)}}
+@media (prefers-reduced-motion:reduce){.card,.genie,.pair{animation:none}}
+
+/* Petunjuk, kristal, timbangan */
+.hint{background:#fff8d6;border:2px solid #e0a96d;border-radius:10px;padding:6px 10px;font-weight:700;line-height:1.5}
+.kode{font-size:1.4rem;letter-spacing:2px}
+.gem{display:inline-block;width:14px;height:14px;margin:0 4px;transform:rotate(45deg);border:2px solid #1d2557}
+.g0{background:#e63946}.g1{background:#3b82f6}.g2{background:#2ecc71}
+.gem.q{background:none;transform:none;border:0;width:auto;height:auto;font-style:normal;font-weight:800}
+.tim{display:flex;align-items:center;justify-content:center;gap:10px;font-weight:800}
+.tim div{border:2px solid #1d2557;border-radius:10px;padding:6px 10px;min-height:34px}
+
+/* HP selalu landscape: jika HP dipegang tegak, seluruh tampilan diputar 90 derajat (iOS tidak bisa mengunci orientasi) */
+:root{--ew:100vw;--eh:100vh}
+@media (orientation:portrait){:root.touch{--ew:100vh;--eh:100vw}}
+@supports (height:100dvh){:root{--eh:100dvh}@media (orientation:portrait){:root.touch{--ew:100dvh;--eh:100vw}}}
+.touch,.touch body{overflow:hidden}
+.touch #root{position:fixed;left:0;top:0;width:var(--ew);height:var(--eh)}
+@media (orientation:portrait){.touch #root{transform-origin:0 0;transform:translateX(100vw) rotate(90deg)}}
+.touch #app{height:100%;padding:0;gap:0}
+.touch #stage{width:min(100%,calc(var(--eh)*1.7778));border-width:0;border-radius:0}
+.touch{--s:.7}
+
+/* Popup (Jin, menu, cara bermain) diringkas di HP */
+.touch .overlay{padding:6px}
+.touch .card{padding:10px 14px;border-radius:16px;max-width:min(94%,560px)}
+.touch .judul{font-size:1.9rem}
+.touch #hero{width:80px;height:80px}
+.touch .card p{margin:2px 0 6px;font-size:.9rem}
+.touch .btn{padding:8px;font-size:.95rem;margin-top:6px}
+.touch .how{font-size:.8rem;line-height:1.3}.touch .how li{margin-bottom:4px}
+.touch #challenge .card{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;align-items:center;max-width:min(94%,820px)}
+.touch #challenge .row{grid-column:1;grid-row:1/3}
+.touch #cvis{grid-column:2;margin:0}
+.touch #copts{grid-column:2;gap:5px}
+.touch #cnext{grid-column:1/3}
+.touch .bubble{font-size:.82rem;padding:6px 10px;line-height:1.3}
+.touch .genie{width:44px}
+.touch .opt{padding:7px;font-size:.92rem}
+.touch #cvis svg{max-height:105px;width:auto}
+.touch .kode{font-size:1.05rem}
